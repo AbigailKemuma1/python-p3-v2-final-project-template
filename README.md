@@ -1,172 +1,193 @@
-# Phase 3 CLI+ORM Project Template
+# Train & Gain CLI
+Here are the links to the videos giving a detailed explanation of what my cli project does:https://www.loom.com/share/19ee42f552534c049620db963f91a1ba and https://www.loom.com/share/d701f8889cf8490282a8b0bbbf8b6851 
 
-## Learning Goals
-
-- Discuss the basic directory structure of a CLI.
-- Outline the first steps in building a CLI.
+Train & Gain is a Python Command-Line Interface (CLI) application designed to help users manage and track their fitness journey. With this app, users can log workouts, meals, progress, and goals, while admins can monitor all users and their activity. The project uses SQLAlchemy ORM for database management and follows Python best practices.
 
 ---
 
-## Introduction
-
-You now have a basic idea of what constitutes a CLI. Fork and clone this lesson
-for a project template for your CLI.
-
-Take a look at the directory structure:
-
-```console
-.
-├── Pipfile
-├── Pipfile.lock
-├── README.md
-└── lib
-    ├── models
-    │   ├── __init__.py
-    │   └── model_1.py
-    ├── cli.py
-    ├── debug.py
-    └── helpers.py
-```
-
-Note: The directory also includes two files named `CONTRIBUTING.md` and
-`LICENSE.md` that are specific to Flatiron's curriculum. You can disregard or
-delete the files if you want.
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Key Files and Functions](#key-files-and-functions)
+- [Database Models](#database-models)
+- [Dependencies](#dependencies)
+- [Screenshots](#screenshots)
 
 ---
 
-## Generating Your Environment
-
-You might have noticed in the file structure- there's already a Pipfile!
-
-Install any additional dependencies you know you'll need for your project by
-adding them to the `Pipfile`. Then run the commands:
-
-```console
-pipenv install
-pipenv shell
-```
+## Features
+- User authentication (login and registration)
+- Add, view, and manage workouts, meals, progress, and goals
+- Admin functionality to monitor and manage all users
+- Detailed prompts and input validation to guide users
+- One-to-many relationships between users and their workouts, meals, and goals
+- Clean CLI menus for easy navigation
 
 ---
 
-## Generating Your CLI
-
-A CLI is, simply put, an interactive script and prompts the user and performs
-operations based on user input.
-
-The project template has a sample CLI in `lib/cli.py` that looks like this:
-
-```py
-# lib/cli.py
-
-from helpers import (
-    exit_program,
-    helper_1
-)
-
-
-def main():
-    while True:
-        menu()
-        choice = input("> ")
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
-            helper_1()
-        else:
-            print("Invalid choice")
-
-
-def menu():
-    print("Please select an option:")
-    print("0. Exit the program")
-    print("1. Some useful function")
-
-
-if __name__ == "__main__":
-    main()
-```
-
-The helper functions are located in `lib/helpers.py`:
-
-```py
-# lib/helpers.py
-
-def helper_1():
-    print("Performing useful function#1.")
-
-
-def exit_program():
-    print("Goodbye!")
-    exit()
-```
-
-You can run the template CLI with `python lib/cli.py`, or include the shebang
-and make it executable with `chmod +x`. The template CLI will ask for input, do
-some work, and accomplish some sort of task.
-
-Past that, CLIs can be whatever you'd like, as long as you follow the project
-requirements.
-
-Of course, you will update `lib/cli.py` with prompts that are appropriate for
-your application, and you will update `lib/helpers.py` to replace `helper_1()`
-with a useful function based on the specific problem domain you decide to
-implement, along with adding other helper functions to the module.
-
-In the `lib/models` folder, you should rename `model_1.py` with the name of a
-data model class from your specific problem domain, and add other classes to the
-folder as needed. The file `lib/models/__init__.py` has been initialized to
-create the necessary database constants. You need to add import statements to
-the various data model classes in order to use the database constants.
-
-You are also welcome to implement a different module and directory structure.
-However, your project should be well organized, modular, and follow the design
-principal of separation of concerns, which means you should separate code
-related to:
-
-- User interface
-- Data persistence
-- Problem domain rules and logic
+## Installation
+1. Clone the repository:
+    ```bash
+    git clone git@github.com:AbigailKemuma1/python-p3-v2-final-project-template.git
+    cd python-p3-v2-final-project-template
+    ```
+2. Install dependencies and activate the virtual environment using Pipenv:
+    ```bash
+    pipenv install
+    pipenv shell
+    ```
+3. Create the database tables:
+    ```bash
+    python -m create_tables
+    ```
+4. Launch the CLI application:
+    ```bash
+    python -m lib.cli
+    ```
 
 ---
 
-## Updating README.md
+## Usage
+When you start the application, you’ll see the main menu with options to log in as a user or admin, or to register as a new user.  
 
-`README.md` is a Markdown file that should describe your project. You will
-replace the contents of this `README.md` file with a description of **your**
-actual project.
+### User Actions
+Once logged in as a user, you can:
+- **View Workouts:** See all your past workouts with details.
+- **Add Workout:** Log a new workout with type, duration, and calories burned.
+- **Update Profile:** Edit your personal information like name, age, height, weight, and fitness goals.
+- **Add Meal:** Record a meal with calories, protein, carbs, and fats.
+- **View Meals:** Review all meals you’ve logged.
+- **Log Progress:** Record your weight and optional notes.
+- **View Progress:** Check your historical progress entries.
+- **Set Goal:** Add a fitness goal with a target and deadline.
+- **View Goals:** Review all goals and optionally update their status.
 
-Markdown is not a language that we cover in Flatiron's Software Engineering
-curriculum, but it's not a particularly difficult language to learn (if you've
-ever left a comment on Reddit, you might already know the basics). Refer to the
-cheat sheet in this assignments's resources for a basic guide to Markdown.
+### Admin Actions
+Admins have additional capabilities:
+- View all users
+- View workouts, meals, progress, and goals for any user
+- Remove a user from the system
 
-### What Goes into a README?
-
-This README serves as a template. Replace the contents of this file to describe
-the important files in your project and describe what they do. Each Python file
-that you edit should get at least a paragraph, and each function should be
-described with a sentence or two.
-
-Describe your actual CLI script first, and with a good level of detail. The rest
-should be ordered by importance to the user. (Probably functions next, then
-models.)
-
-Screenshots and links to resources that you used throughout are also useful to
-users and collaborators, but a little more syntactically complicated. Only add
-these in if you're feeling comfortable with Markdown.
+The menus are intuitive and will guide you through input validation, ensuring that only valid data is stored in the database.
 
 ---
 
-## Conclusion
+## Project Structure
 
-A lot of work goes into a good CLI, but it all relies on concepts that you've
-practiced quite a bit by now. Hopefully this template and guide will get you off
-to a good start with your Phase 3 Project.
+python-p3-v2-final-project-template/
+├─ lib/
+│ ├─ cli.py
+│ ├─ helpers.py
+│ ├─ debug.py
+│ └─ models/
+│ ├─ base.py
+│ ├─ user.py
+│ ├─ workout.py
+│ ├─ meal.py
+│ └─ goal.py
+├─ create_tables.py
+├─ Pipfile
+└─ README.md
 
-Happy coding!
 
 ---
 
-## Resources
+## Key Files and Functions
 
-- [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
+### `lib/cli.py`
+This is the main script for the CLI. It contains the main menu logic and user/admin menus.
+
+**Key Functions:**
+- `main()`: Shows the main menu and handles user login, registration, and admin login.
+- `user_menu(user_id)`: Allows users to manage workouts, meals, progress, and goals.
+- `admin_menu()`: Allows admins to monitor users and their activities.
+
+### `lib/helpers.py`
+Contains utility functions to handle all database operations.
+
+**Important Functions:**
+- User authentication: `register_user()`, `login_user()`, `login_admin()`
+- Profile updates: `update_user_profile()`
+- Workouts: `add_workout()`, `view_workouts()`
+- Meals: `add_meal()`, `view_meals()`
+- Progress tracking: `log_progress()`, `view_progress()`
+- Goals: `set_goal()`, `view_goals()`, `update_goal_status()`
+- Admin utilities: `get_all_users()`, `remove_user()`
+
+### `lib/models/base.py`
+Contains the SQLAlchemy setup:
+- `Base`: The declarative base for ORM models
+- `engine`: Database engine connection
+- `Session`: Factory to create sessions for transactions
+
+### `lib/models/user.py`
+Defines the `User` model with properties like `username`, `password`, `name`, `age`, `height`, `weight`, and `fitness_goal`. Includes methods for creating, updating, deleting, and retrieving users.
+
+### `lib/models/workout.py`
+Defines the `Workout` model, linked to a user. Stores `workout_type`, `duration`, and `calories_burned`. Provides ORM methods for CRUD operations.
+
+### `lib/models/meal.py`
+Defines the `Meal` model, linked to a user. Stores `meal_name`, `calories`, `protein`, `carbs`, and `fats`. Includes methods to manage meals.
+
+### `lib/models/goal.py`
+Defines the `Goal` model, linked to a user. Stores `goal_type`, `target`, `deadline`, and `status`. Includes methods for creating, updating, and retrieving goals.
+
+### `create_tables.py`
+Creates all tables in the database using SQLAlchemy ORM. This script should be run once before using the CLI.
+
+---
+
+## Database Models
+The database includes the following tables:
+
+- `User` – stores user profile and authentication data
+- `Workout` – tracks workouts for each user (one-to-many relationship)
+- `Meal` – tracks meals for each user (one-to-many relationship)
+- `Goal` – tracks goals for each user (one-to-many relationship)
+
+---
+
+## Dependencies
+- Python 3.8+
+- SQLAlchemy
+- Pipenv (for virtual environment management)
+
+---
+
+## Screenshots
+**Main Menu:**
+User Login
+
+Register
+
+Admin Login
+
+Exit
+
+
+
+**User Menu:**
+View Workouts
+
+Add Workout
+
+Update Profile
+
+Add Meal
+
+View Meals
+
+Log Progress
+
+View Progress
+
+Set Goal
+
+View Goals
+
+Logout
+
+
+---
